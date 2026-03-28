@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\services\\facerecognitionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:services\\facerecognitionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\platforms\\windows\\package.appxmanifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:platforms\\windows\\package.appxmanifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|c:\\users\\jkacz\\desktop\\face-recognition-project-main\\mobile\\platforms\\android\\androidmanifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{9E7153B0-E8B4-6E5C-39F9-1F493C890E5B}|FaceScaner.csproj|solutionrelative:platforms\\android\\androidmanifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Views\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Views\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Views\\MainPage.xaml",
+              "RelativeToolTip": "Views\\MainPage.xaml",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAnwHcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-28T17:29:30.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Views\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\MainPage.xaml.cs",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Views\\MainPage.xaml.cs",
+              "RelativeToolTip": "Views\\MainPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-28T17:29:07.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAADwv2wAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-28T17:27:16.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA8wB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-28T17:01:13.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Package.appxmanifest",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Platforms\\Windows\\Package.appxmanifest",
+              "RelativeDocumentMoniker": "Platforms\\Windows\\Package.appxmanifest",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Platforms\\Windows\\Package.appxmanifest",
+              "RelativeToolTip": "Platforms\\Windows\\Package.appxmanifest",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAC0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001793|",
+              "WhenOpened": "2026-03-28T17:00:21.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T16:27:00.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AndroidManifest.xml",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Platforms\\Android\\AndroidManifest.xml",
+              "RelativeDocumentMoniker": "Platforms\\Android\\AndroidManifest.xml",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Platforms\\Android\\AndroidManifest.xml",
+              "RelativeToolTip": "Platforms\\Android\\AndroidManifest.xml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-03-28T14:12:54.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FaceRecognitionService.cs",
+              "DocumentMoniker": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Services\\FaceRecognitionService.cs",
+              "RelativeDocumentMoniker": "Services\\FaceRecognitionService.cs",
+              "ToolTip": "C:\\Users\\jkacz\\Desktop\\Face-Recognition-Project-main\\mobile\\Services\\FaceRecognitionService.cs",
+              "RelativeToolTip": "Services\\FaceRecognitionService.cs",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAqwI0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-28T14:01:21.383Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -3,10 +3,15 @@
 Face Service - DeepFace integration for face recognition
 """
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 import sys
 import json
 import argparse
 from deepface import DeepFace
+
 
 MODEL_NAME = "Facenet512"
 
@@ -16,7 +21,7 @@ def extract_embedding(image_path):
             img_path=image_path,
             model_name=MODEL_NAME,
             enforce_detection=True,
-            detector_backend='opencv'
+            detector_backend='mtcnn'
         )
         
         if len(result) == 0:
@@ -53,9 +58,8 @@ def main():
     
     result = extract_embedding(args.image)
     print(json.dumps(result))
-    
-    if not result['success']:
-        sys.exit(1)
+    # Zawsze exit 0 - błąd jest zakodowany w JSON (result['success'] = False)
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

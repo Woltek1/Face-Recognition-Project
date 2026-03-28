@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FaceScaner.ViewModels"
+             xmlns:conv="clr-namespace:FaceScaner.Converters"
+             x:Class="FaceScaner.Views.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0F0F0F">
+    <ContentPage.Resources>
+        <conv:NullToBoolConverter x:Key="NullToBoolConverter"/>
+        <conv:ConfidenceToWidthConverter x:Key="ConfidenceToWidthConverter"/>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Grid.Row="0" Padding="28,54,28,20">
+            <Label Text="FACE ID" FontSize="13" FontAttributes="Bold" CharacterSpacing="5" TextColor="#FFFFFF"/>
+            <Label Text="System rozpoznawania twarzy" FontSize="12" TextColor="#555555" Margin="0,2,0,0"/>
+        </VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,0,20,20" Spacing="16">
+                <Border StrokeThickness="1" Stroke="#222222" StrokeShape="RoundRectangle 20" HeightRequest="300" BackgroundColor="#161616">
+                    <Grid>
+                        <VerticalStackLayout IsVisible="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}, ConverterParameter=invert}"
+                                             HorizontalOptions="Center" VerticalOptions="Center" Spacing="14">
+                            <Label Text="O" FontSize="52" TextColor="#252525" HorizontalOptions="Center"/>
+                            <Label Text="Zeskanuj twarz" FontSize="13" TextColor="#404040" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Image Source="{Binding PreviewImage}"
+                               Aspect="AspectFill"
+                               IsVisible="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}}"
+                               VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                        <Grid IsVisible="{Binding IsScanning}" BackgroundColor="#E60F0F0F">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="16">
+                                <ActivityIndicator IsRunning="True" Color="#FFFFFF" WidthRequest="28" HeightRequest="28"/>
+                                <Label Text="Analizuje twarz..." FontSize="13" TextColor="#666666" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border IsVisible="{Binding HasResult}"
+                        StrokeThickness="1" Stroke="#222222"
+                        StrokeShape="RoundRectangle 16"
+                        BackgroundColor="#161616" Padding="20">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="WYNIK SKANOWANIA" FontSize="10" CharacterSpacing="3"
+                                   TextColor="#444444" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Border Grid.Column="1" Padding="10,5" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 20"
+                                    BackgroundColor="{Binding CurrentResult.ConfidenceColor}">
+                                <Label Text="{Binding CurrentResult.ConfidenceLabel}"
+                                       FontSize="10" FontAttributes="Bold" TextColor="#000000"/>
+                            </Border>
+                        </Grid>
+                        <Label Text="{Binding CurrentResult.PersonName}"
+                               FontSize="34" FontAttributes="Bold" TextColor="#FFFFFF" Margin="0,14,0,4"/>
+                        <Label FontSize="12" TextColor="#555555" Margin="0,0,0,16">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="ID osoby: " TextColor="#3A3A3A"/>
+                                    <Span Text="{Binding CurrentResult.PersonId}" TextColor="#555555"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <BoxView Color="#1E1E1E" HeightRequest="1" Margin="0,0,0,16"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+                            <Label Text="PEWNOSC" FontSize="10" CharacterSpacing="2"
+                                   TextColor="#444444" VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                                   Text="{Binding CurrentResult.ConfidencePercent}"
+                                   FontSize="14" FontAttributes="Bold"
+                                   TextColor="{Binding CurrentResult.ConfidenceColor}"/>
+                        </Grid>
+                        <Border StrokeThickness="0" StrokeShape="RoundRectangle 3"
+                                BackgroundColor="#202020" HeightRequest="4">
+                            <BoxView Color="{Binding CurrentResult.ConfidenceColor}"
+                                     HeightRequest="4" HorizontalOptions="Start"
+                                     WidthRequest="{Binding CurrentResult.Confidence,
+                                         Converter={StaticResource ConfidenceToWidthConverter},
+                                         ConverterParameter=280}"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+                <Border IsVisible="{Binding HasError}"
+                        StrokeThickness="1" Stroke="#3A1A1A"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="#1A0F0F" Padding="18,14">
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="!" FontSize="16" TextColor="#EF4444"
+                               VerticalOptions="Center" FontAttributes="Bold"/>
+                        <Label Text="{Binding ErrorMessage}" FontSize="13"
+                               TextColor="#AA3333" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border IsVisible="{Binding ShowAddPanel}"
+                    StrokeThickness="1" Stroke="#222222"
+                    StrokeShape="RoundRectangle 16"
+                    BackgroundColor="#161616" Padding="20">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="DODAJ DO BAZY" FontSize="10" CharacterSpacing="3"
+                            TextColor="#444444" FontAttributes="Bold"/>
+                        <Border StrokeThickness="1" Stroke="#2A2A2A"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="#1E1E1E" Padding="14,10">
+                            <Entry Text="{Binding NewPersonName}"
+                               Placeholder="Imię i nazwisko"
+                               PlaceholderColor="#444444"
+                               TextColor="#FFFFFF"
+                               BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeThickness="0" StrokeShape="RoundRectangle 10"
+                        BackgroundColor="#FFFFFF" Padding="0,14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddToDatabaseCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="DODAJ DO BAZY"
+                               FontSize="11" CharacterSpacing="2"
+                               FontAttributes="Bold" TextColor="#000000"
+                               HorizontalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout IsVisible="{Binding HasHistory}" Spacing="8">
+                    <Label Text="OSTATNIE SKANY" FontSize="10" CharacterSpacing="3"
+                           TextColor="#444444" FontAttributes="Bold" Margin="0,8,0,4"/>
+                    <CollectionView ItemsSource="{Binding History}"
+                                    HeightRequest="240" SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeThickness="1" Stroke="#1E1E1E"
+                                        StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#141414" Padding="16,12">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                            <Label Text="{Binding Result.PersonName}"
+                                                   FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC"/>
+                                            <Label Text="{Binding TimeAgo}"
+                                                   FontSize="11" TextColor="#3E3E3E"/>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="1" Padding="10,5"
+                                                StrokeThickness="1"
+                                                Stroke="{Binding Result.ConfidenceColor}"
+                                                StrokeShape="RoundRectangle 8"
+                                                BackgroundColor="Transparent"
+                                                VerticalOptions="Center">
+                                            <Label Text="{Binding Result.ConfidencePercent}"
+                                                   FontSize="11" FontAttributes="Bold"
+                                                   TextColor="{Binding Result.ConfidenceColor}"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12"
+              Padding="20,12,20,38" BackgroundColor="#0F0F0F">
+            <Border Grid.Column="0" StrokeThickness="1" Stroke="#242424"
+                    StrokeShape="RoundRectangle 14" BackgroundColor="#181818" Padding="0,20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ScanWithCameraCommand}"/>
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="7" HorizontalOptions="Center">
+                    <Label Text="[ ]" FontSize="22" TextColor="#FFFFFF" HorizontalOptions="Center"/>
+                    <Label Text="APARAT" FontSize="10" CharacterSpacing="2"
+                           FontAttributes="Bold" TextColor="#666666" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="1" StrokeThickness="1" Stroke="#242424"
+                    StrokeShape="RoundRectangle 14" BackgroundColor="#181818" Padding="0,20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PickFromGalleryCommand}"/>
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="7" HorizontalOptions="Center">
+                    <Label Text="[ + ]" FontSize="22" TextColor="#FFFFFF" HorizontalOptions="Center"/>
+                    <Label Text="GALERIA" FontSize="10" CharacterSpacing="2"
+                           FontAttributes="Bold" TextColor="#666666" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

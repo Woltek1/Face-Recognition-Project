@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Rozpoznawania Twarzy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #0f0f1a;
+            --panel: #13131f;
+            --border: #2a2a4a;
+            --accent: #00e5ff;
+            --accent-dim: rgba(0,229,255,0.12);
+            --success: #00ff88;
+            --success-dim: rgba(0,255,136,0.1);
+            --danger: #ff2d55;
+            --danger-dim: rgba(255,45,85,0.1);
+            --warning: #ffd600;
+            --text: #c8d0e0;
+            --text-dim: #5a6070;
+            --mono: 'Share Tech Mono', monospace;
+            --sans: 'Rajdhani', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Scanline overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,229,255,0.015) 2px,
+                rgba(0,229,255,0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Grid background */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 680px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0.7;
+        }
+
+        h1 {
+            font-family: var(--sans);
+            font-size: clamp(22px, 5vw, 32px);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(0,229,255,0.4);
+        }
+
+        h1 span { color: var(--accent); }
+
+        .subtitle {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        /* Main panel */
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 28px;
+            position: relative;
+        }
+
+        /* Corner accents */
+        .panel::before, .panel::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: var(--accent);
+            border-style: solid;
+        }
+        .panel::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .panel::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        /* Sections */
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        /* Drop zone */
+        .drop-zone {
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+            padding: 36px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            background: var(--surface);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .drop-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .drop-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+            filter: grayscale(0.5);
+        }
+
+        .drop-text {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .drop-text strong {
+            color: var(--accent);
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        /* Preview area */
+        #preview-area {
+            display: none;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        #preview-area img {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            display: block;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(10,10,15,0.85);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 4px 10px;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+
+        .change-btn {
+            margin-top: 10px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-family: var(--mono);
+            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+        .change-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Submit button */
+        #submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #submit-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            transform: translateX(-100%);
+            transition: transform 0.2s ease;
+            z-index: -1;
+        }
+
+        #submit-btn:hover:not(:disabled)::before { transform: translateX(0); }
+        #submit-btn:hover:not(:disabled) { color: var(--bg); }
+
+        #submit-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: var(--border);
+            color: var(--text-dim);
+        }
+
+        /* Status display */
+        #status-area {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .status-box {
+            border: 1px solid;
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .status-box.loading {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .status-box.success {
+            border-color: var(--success);
+            background: var(--success-dim);
+        }
+
+        .status-box.failure {
+            border-color: var(--danger);
+            background: var(--danger-dim);
+        }
+
+        .status-box.error {
+            border-color: var(--warning);
+            background: rgba(255,214,0,0.07);
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .status-icon { font-size: 20px; }
+
+        .status-title {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .loading .status-title  { color: var(--accent); }
+        .success .status-title  { color: var(--success); }
+        .failure .status-title  { color: var(--danger); }
+        .error   .status-title  { color: var(--warning); }
+
+        /* Spinner */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0,229,255,0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result rows */
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: var(--mono);
+            font-size: 12px;
+        }
+
+        .result-row:last-child { border-bottom: none; }
+
+        .result-label { color: var(--text-dim); letter-spacing: 1px; }
+
+        .result-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .result-value.name-value {
+            font-size: 15px;
+            color: #fff;
+        }
+
+        /* Confidence bar */
+        .confidence-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .confidence-bar {
+            width: 100px;
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+
+        /* Health indicator */
+        .health-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .health-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-dim);
+            flex-shrink: 0;
+        }
+
+        .health-dot.ok { background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse 2s infinite; }
+        .health-dot.err { background: var(--danger); }
+
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        .health-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        .health-label span { color: var(--text); }
+
+        /* Divider */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 22px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .panel { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <span class="badge">▸ SYSTEM v1.0 ◂</span>
+        <h1>Rozpoznawanie <span>Twarzy</span></h1>
+        <p class="subtitle">// facial recognition interface</p>
+    </header>
+
+    <div class="panel">
+
+        <!-- Upload section -->
+        <p class="section-label">// 01 — wybierz zdjęcie</p>
+
+        <div class="drop-zone" id="drop-zone">
+            <input type="file" id="file-input" accept="image/jpeg,image/png" aria-label="Wybierz plik zdjęcia">
+            <span class="drop-icon">🖼</span>
+            <div class="drop-text">
+                <strong>Kliknij lub upuść plik</strong>
+                Formaty: JPG, PNG
+            </div>
+        </div>
+
+        <div id="preview-area">
+            <img id="preview-img" src="" alt="Podgląd zdjęcia">
+            <div class="preview-overlay" id="file-info">—</div>
+            <button class="change-btn" id="change-btn">↺ zmień zdjęcie</button>
+        </div>
+
+        <hr>
+
+        <!-- Submit section -->
+        <p class="section-label">// 02 — weryfikacja</p>
+
+        <button id="submit-btn" disabled>▶ Sprawdź twarz</button>
+
+        <!-- Status area -->
+        <div id="status-area">
+            <!-- Content injected by JS -->
+        </div>
+
+        <!-- Health bar -->
+        <div class="health-bar">
+            <div class="health-dot" id="health-dot"></div>
+            <span class="health-label">SERWER: <span id="health-text">sprawdzanie...</span></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================================================
+    // CONFIG — zmień tylko ten adres przy integracji
+    // ==================================================
+    const API_URL = 'http://localhost:8000/api';
+
+    // ==================================================
+    // STATE
+    // ==================================================
+    let selectedFile = null;
+
+    // ==================================================
+    // DOM refs
+    // ==================================================
+    const fileInput   = document.getElementById('file-input');
+    const dropZone    = document.getElementById('drop-zone');
+    const previewArea = document.getElementById('preview-area');
+    const previewImg  = document.getElementById('preview-img');
+    const fileInfo    = document.getElementById('file-info');
+    const changeBtn   = document.getElementById('change-btn');
+    const submitBtn   = document.getElementById('submit-btn');
+    const statusArea  = document.getElementById('status-area');
+    const healthDot   = document.getElementById('health-dot');
+    const healthText  = document.getElementById('health-text');
+
+    // ==================================================
+    // FILE SELECTION
+    // ==================================================
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files[0]) handleFile(fileInput.files[0]);
+    });
+
+    changeBtn.addEventListener('click', () => {
+        resetFile();
+        fileInput.value = '';
+        fileInput.click();
+    });
+
+    // Drag & drop
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        const f = e.dataTransfer.files[0];
+        if (f && (f.type === 'image/jpeg' || f.type === 'image/png')) {
+            handleFile(f);
+        }
+    });
+
+    function handleFile(file) {
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = e => {
+            previewImg.src = e.target.result;
+            previewArea.style.display = 'block';
+            dropZone.style.display = 'none';
+            fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
+            submitBtn.disabled = false;
+            clearStatus();
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resetFile() {
+        selectedFile = null;
+        previewArea.style.display = 'none';
+        dropZone.style.display = 'block';
+        submitBtn.disabled = true;
+        clearStatus();
+    }
+
+    // ==================================================
+    // SUBMIT
+    // ==================================================
+    submitBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
+        await recognize();
+    });
+
+    async function recognize() {
+        showLoading();
+        submitBtn.disabled = true;
+
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+
+        try {
+            const response = await fetch(`${API_URL}/recognize`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // HTTP 400 / 500 — error field
+                showError(data.error || 'Nieznany błąd serwera.');
+                return;
+            }
+
+            if (data.matched) {
+                showSuccess(data.person, data.confidence);
+            } else {
+                showFailure();
+            }
+        } catch (err) {
+            console.error('Błąd połączenia:', err);
+            showError('Nie można połączyć z serwerem. Sprawdź czy backend działa.');
+        } finally {
+            submitBtn.disabled = false;
+        }
+    }
+
+    // ==================================================
+    // STATUS RENDERERS
+    // ==================================================
+    function clearStatus() {
+        statusArea.style.display = 'none';
+        statusArea.innerHTML = '';
+    }
+
+    function showLoading() {
+        statusArea.style.display = 'block';
+        statusArea.innerHTML = `
+            <div class="status-box loading">
+                <div class="status-header">
+                    <div class="spinner"></div>
+                    <span class="status-title">Analizowanie obrazu...</span>
+                </div>
+            </div>`;
+    }
+
+    function showSuccess(person, confidence) {
+        const pct = Math.round(confidence * 100);
+        statusArea.innerHTML = `
+            <div class="status-box success">
+                <div class="status-header">
+                    <span class="status-icon">✅</span>
+                    <span class="status-title">Twarz rozpoznana</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">OSOBA</span>
+                    <span class="result-value name-value">${escapeHtml(person)}</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">PEWNOŚĆ</span>
+                    <div class="confidence-bar-wrap">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width:${pct}%"></div>
+                        </div>
+                        <span class="result-value">${pct}%</span>
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    function showFailure() {
+        statusArea.innerHTML = `
+            <div class="status-box failure">
+                <div class="status-header">
+                    <span class="status-icon">❌</span>
+                    <span class="status-title">Nie rozpoznano</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">WYNIK</span>
+                    <span class="result-value">Osoba nieznana w bazie danych</span>
+                </div>
+            </div>`;
+    }
+
+    function showError(message) {
+        statusArea.innerHTML = `
+            <div class="status-box error">
+                <div class="status-header">
+                    <span class="status-icon">⚠️</span>
+                    <span class="status-title">Błąd</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">OPIS</span>
+                    <span class="result-value">${escapeHtml(message)}</span>
+                </div>
+            </div>`;
+    }
+
+    // ==================================================
+    // HEALTH CHECK
+    // ==================================================
+    async function checkHealth() {
+        try {
+            const res = await fetch(`${API_URL}/health`, { signal: AbortSignal.timeout(4000) });
+            const data = await res.json();
+            if (data.status === 'ok') {
+                healthDot.className = 'health-dot ok';
+                healthText.textContent = 'ONLINE';
+            } else {
+                throw new Error();
+            }
+        } catch {
+            healthDot.className = 'health-dot err';
+            healthText.textContent = 'OFFLINE';
+        }
+    }
+
+    // ==================================================
+    // UTILS
+    // ==================================================
+    function escapeHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+    }
+
+    // ==================================================
+    // INIT
+    // ==================================================
+    checkHealth();
+    setInterval(checkHealth, 15000);
+</script>
+</body>
+</html>

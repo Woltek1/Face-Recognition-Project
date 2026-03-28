@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FaceScaner</name>
+    </assembly>
+    <members>
+        <member name="T:FaceScaner.ViewModels.MainViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.IsScanning">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.isScanning"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.HasResult">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.hasResult"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.HasError">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.hasError"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.ErrorMessage">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.errorMessage"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.CurrentResult">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.currentResult"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.PreviewImage">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.previewImage"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.NewPersonName">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.newPersonName"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.ShowAddPanel">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.showAddPanel"/>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.IsAdding">
+            <inheritdoc cref="F:FaceScaner.ViewModels.MainViewModel.isAdding"/>
+        </member>
+        <member name="F:FaceScaner.ViewModels.MainViewModel.scanWithCameraCommand">
+            <summary>The backing field for <see cref="P:FaceScaner.ViewModels.MainViewModel.ScanWithCameraCommand"/>.</summary>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.ScanWithCameraCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FaceScaner.ViewModels.MainViewModel.ScanWithCameraAsync"/>.</summary>
+        </member>
+        <member name="F:FaceScaner.ViewModels.MainViewModel.pickFromGalleryCommand">
+            <summary>The backing field for <see cref="P:FaceScaner.ViewModels.MainViewModel.PickFromGalleryCommand"/>.</summary>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.PickFromGalleryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FaceScaner.ViewModels.MainViewModel.PickFromGalleryAsync"/>.</summary>
+        </member>
+        <member name="F:FaceScaner.ViewModels.MainViewModel.clearCommand">
+            <summary>The backing field for <see cref="P:FaceScaner.ViewModels.MainViewModel.ClearCommand"/>.</summary>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.ClearCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:FaceScaner.ViewModels.MainViewModel.Clear"/>.</summary>
+        </member>
+        <member name="F:FaceScaner.ViewModels.MainViewModel.addToDatabaseCommand">
+            <summary>The backing field for <see cref="P:FaceScaner.ViewModels.MainViewModel.AddToDatabaseCommand"/>.</summary>
+        </member>
+        <member name="P:FaceScaner.ViewModels.MainViewModel.AddToDatabaseCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FaceScaner.ViewModels.MainViewModel.AddToDatabase"/>.</summary>
+        </member>
+        <member name="T:FaceScaner.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsScanning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsScanning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasResult">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasResult" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasError">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasError" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ErrorMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentResult">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentResult" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PreviewImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PreviewImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewPersonName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewPersonName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ShowAddPanel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ShowAddPanel" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsAdding">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsAdding" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsScanning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsScanning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasResult">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasResult" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasError">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasError" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ErrorMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentResult">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentResult" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PreviewImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PreviewImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewPersonName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewPersonName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ShowAddPanel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ShowAddPanel" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsAdding">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsAdding" generated properties.</summary>
+        </member>
+    </members>
+</doc>

@@ -6,7 +6,9 @@ const config = require('./config');
 
 function callFaceService(imagePath, mode) {
   return new Promise((resolve, reject) => {
-    const py = spawn(config.PYTHON_PATH, ['face_service.py', '--image', imagePath, '--mode', mode]);
+    const py = spawn(config.PYTHON_PATH, ['face_service.py', '--image', imagePath, '--mode', mode], {
+      env: { ...process.env, TF_ENABLE_ONEDNN_OPTS: '0', PYTHONIOENCODING: 'utf-8' }
+    });
     let output = '';
     let errorOutput = '';
 
